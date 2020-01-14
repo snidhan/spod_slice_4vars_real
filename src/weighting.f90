@@ -29,6 +29,7 @@ subroutine weighting(weightDIR, weightfile, Q_ktemp, Stemp, Nblk, Nrows, nr, nth
         elseif (i .eq. 4) then
             do j = 1, nr*ntheta
                 Q_kweight((i-1)*nr*ntheta + j, :) = W(j)*Q_ktemp((i-1)*nr*ntheta + j, :)/(2**2)      !! TAPE - Total available
+                !Q_kweight((i-1)*nr*ntheta + j, :) =  Q_ktemp((i-1)*nr*ntheta + j, :)                 !! TAPE - Total available
                                                                                                      !! potential energy
                                                                                                      !! Refer Chongsiripinyo and
                                                                                                      !! Sarkar 2019 

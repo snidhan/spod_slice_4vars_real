@@ -19,9 +19,9 @@ program main
     real    (kind=8),    parameter ::  pi         = 3.141592653589793238462643383279502884197d0   
     character (len=160), parameter ::  inDIR      = '/mnt/RAID5/sheel/spod_re5e4/fr2/'
     character (len=160), parameter ::  weightDIR  = './'
-    character (len=160), parameter ::  weightfile = 'weight_fr2_slice_4var.txt'
-    character (len=160), parameter ::  outDIR     = '/mnt/RAID5/sheel/spod_re5e4/fr2/spod_data/x_D_50/'
-    character (len=160), parameter ::  slice_idx  = '50'
+    character (len=160), parameter ::  weightfile = 'weight_fr2_slice_var_truncated_r_D_10.txt'
+    character (len=160), parameter ::  outDIR     = '/mnt/RAID5/sheel/spod_re5e4/fr2/spod_data/x_D_100/'
+    character (len=160), parameter ::  slice_idx  = '100'
     integer (kind=4)               ::  nr, ntheta, nx, numvar, N, stride, Nfreq, Novlp, idx
     integer (kind=4)               ::  nstart
     real    (kind=8)               ::  dt
@@ -200,7 +200,7 @@ program main
     allocate (Qtemp(Nrows, Nfreq))
     allocate (in1(Nfreq))
     allocate (out1(Nfreq))
-    allocate (Qout(Nrows, Nfreq, Nblk))
+    print*, '2. Allocating the most memory consuming array Qblk'
     allocate (Qblk(Nrows, Nfreq, Nblk))
     allocate (window(Nfreq))
 
@@ -240,9 +240,13 @@ program main
     print*, 'maxval of real Qblk ', maxval((Qblk(:,:,:)))     
 
     deallocate(window)  
+    
+    print*, '1. Allocating the most memory consuming array Qout'
+    allocate (Qout(Nrows, Nfreq, Nblk))
  
     !!!!!!!!!!!!!!!! Row wise FFT of individual blocks !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     do i = 1,Nblk
+        print*, 'In Nblk ', i
         Qtemp(1:Nrows,1:Nfreq) = Qblk(1:Nrows,1:Nfreq,i)
         
         do j = 1, Nrows
@@ -258,6 +262,7 @@ program main
         !call dfftw_destroy_plan(plan_backward) 
         !   Q_inv(:,:,i) = inv1
     end do
+   
     
     deallocate (Qtemp, Qblk)       
     deallocate (in1, out1)

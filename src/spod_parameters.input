@@ -1,12 +1,12 @@
-519                                                                                                   !Number of points in radial direction
+330                                                                                                   !Number of points in radial direction
 256                                                                                                   !Number of points in theta direction
 1                                                                                                     !Number of points in the axial direction
 4                                                                                                     !Number of variables
-0.07                                                                                                  !dt - delta t of snapshots
-5400                                                                                                  !Number of snapshots
-2337600                                                                                               !Start of snapshots
+0.0905                                                                                                !dt - delta t of snapshots
+2617                                                                                                  !Number of snapshots
+2830800                                                                                               !Start of snapshots
 100                                                                                                   !Stride
 512                                                                                                   !Nfreq
-2                                                                                                     !Nblk_sampled
-50                                                                                                    !Nfreq_sampled
+1                                                                                                     !Nblk_sampled
+10                                                                                                    !Nfreq_sampled
 256                                                                                                   !Novlp
