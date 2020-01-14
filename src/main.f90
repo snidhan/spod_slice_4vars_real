@@ -17,6 +17,7 @@ program main
 
     !!! Parameters
     real    (kind=8),    parameter ::  pi         = 3.141592653589793238462643383279502884197d0   
+    real    (kind=8),    parameter ::  Fr         = 2.0d0
     character (len=160), parameter ::  inDIR      = '/mnt/RAID5/sheel/spod_re5e4/fr2/'
     character (len=160), parameter ::  weightDIR  = './'
     character (len=160), parameter ::  weightfile = 'weight_fr2_slice_var_truncated_r_D_10.txt'
@@ -316,7 +317,7 @@ program main
     allocate (Stemp(Nblk, Nblk))
    
     do i = 1, Nfreq
-        call weighting(weightDIR, weightfile, Q_k(:,:,i), Stemp, Nblk, Nrows, nr, ntheta, numvar)
+        call weighting(weightDIR, weightfile, Q_k(:,:,i), Stemp, Nblk, Nrows, nr, ntheta, numvar,Fr)
         S(:,:,i) = Stemp
     end do
 

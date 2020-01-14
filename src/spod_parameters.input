@@ -3,10 +3,10 @@
 1                                                                                                     !Number of points in the axial direction
 4                                                                                                     !Number of variables
 0.0905                                                                                                !dt - delta t of snapshots
-2617                                                                                                  !Number of snapshots
-2830800                                                                                               !Start of snapshots
+7500                                                                                                  !Number of snapshots
+2392600                                                                                               !Start of snapshots
 100                                                                                                   !Stride
 512                                                                                                   !Nfreq
-1                                                                                                     !Nblk_sampled
-10                                                                                                    !Nfreq_sampled
+3                                                                                                     !Nblk_sampled
+25                                                                                                    !Nfreq_sampled
 256                                                                                                   !Novlp

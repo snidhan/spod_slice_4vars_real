@@ -6,10 +6,10 @@ subroutine io_slice_files(filename, nr, ntheta, nx, pr)
     real (kind=8)       :: pr(nr+2, ntheta+2, nx), pr_full(521,258,nx)
 
      open(unit=500, file=filename,  status='old', form='unformatted', access='stream', action='read')
-     read(500) pr_full
+     read(500) pr_full                                              !! Read the full datafile in pr_full
      close (500)
 
-     pr(1:nr+2,1:ntheta+2,1:nx) = pr_full(1:nr+2,1:ntheta+2,1:nx)
+     pr(1:nr+2,1:ntheta+2,1:nx) = pr_full(1:nr+2,1:ntheta+2,1:nx)   !! Read the truncated version to pr till r/D = 10 
 
      return
 
