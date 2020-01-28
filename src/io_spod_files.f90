@@ -40,7 +40,7 @@ subroutine io_spod_files(Lambda, Lambda_invsq, Eigen_V, Q_k, outDIR, Nrows, Nblk
 
     do k = 1, Nfreq_sampled
 !        do j = Nblk, Nblk - Nblk_sampled, -1   !! Ordering the eigenmodes correctly
-         do j = 1,Nblk_sampled
+         do j = Nblk, Nblk-Nblk_sampled+1, -1
             basename = 'eigenmode'
             write(filename,'(a,a,a,i4.4,a,i2.2,a,a)') trim(outDIR), trim(basename)//"_","freq_", k, "_", j, "_real.mod"
             open(unit=13, file=filename,  status='replace', form='unformatted', action='write')

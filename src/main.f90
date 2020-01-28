@@ -17,11 +17,10 @@ program main
 
     !!! Parameters
     real    (kind=8),    parameter ::  pi         = 3.141592653589793238462643383279502884197d0   
-    real    (kind=8),    parameter ::  Fr         = 2.0d0
     character (len=160), parameter ::  inDIR      = '/mnt/RAID5/sheel/spod_re5e4/fr2/'
     character (len=160), parameter ::  weightDIR  = './'
-    character (len=160), parameter ::  weightfile = 'weight_fr2_slice_var_truncated_r_D_10.txt'
-    character (len=160), parameter ::  outDIR     = '/mnt/RAID5/sheel/spod_re5e4/fr2/spod_data/x_D_100/'
+    character (len=160), parameter ::  weightfile = 'weight_fr2_slice_var_truncated_r_D_10_2d.txt'
+    character (len=160), parameter ::  outDIR     = './'
     character (len=160), parameter ::  slice_idx  = '100'
     integer (kind=4)               ::  nr, ntheta, nx, numvar, N, stride, Nfreq, Novlp, idx
     integer (kind=4)               ::  nstart
@@ -114,7 +113,9 @@ program main
         basename = 'up'
         write(filename,'(a,a,a,a,a,a,a,a,i8.8,a,a,a)') trim(inDIR), trim(folder_name), "/", "x_D_", trim(slice_idx), "/", trim(basename), "_", namef, "_", &
                                                  trim(slice_idx), ".5p"
+        print*, filename, nr, ntheta, nx
         call io_slice_files(filename, nr, ntheta, nx, Pr)
+
 
         do k = 1, nr
              P_trunc(k, 1:ntheta, :) = 0.50d0*(Pr(k+1, 2:ntheta+1, :) + Pr(k, 2:ntheta+1, :))  !!!!!! Centered the u velocity field !!!!!!!!!!!!!!!!!!!!!!!!
@@ -128,11 +129,12 @@ program main
         write(filename,'(a,a,a,a,a,a,a,a,i8.8,a,a,a)') trim(inDIR), trim(folder_name), "/", "x_D_", trim(slice_idx), "/", trim(basename), "_", namef, "_", &
                                                  trim(slice_idx), ".5p"
         call io_slice_files(filename, nr, ntheta, nx, Pr)
-        P(1:nr,1:ntheta,:,2) = Pr
 
          do k = 1, ntheta
               P_trunc(1:nr, k, :) = 0.50d0*(pr(2:nr+1, k, :) + Pr(2:nr+1, k+1, :))          !!!!!! Centered the v velocity field !!!!!!!!!!!!!!!!!!!!!!!!
          end do
+         
+        P(1:nr,1:ntheta,:,2) = P_trunc
 
         !!!!! Reading the wp files
         folder_name = 'wp_slice'
@@ -165,8 +167,8 @@ program main
     deallocate(Pr, P)
 
     print*, 'Shape of Q ',                     shape(Q)       
-    print*, 'minval of real part of Q ',       minval((Q(:,:)))     
-    print*, 'maxval of real part of Q ',       maxval((Q(:,:)))     
+    print*, 'minval of real part of Q ',       minval((Q(1:nr*ntheta,:)))     
+    print*, 'maxval of real part of Q ',       maxval((Q(1:nr*ntheta,:)))     
 
     !!!!!!!!!!! Subtracting the mean from snapshot matrix !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     call subtract_qmean(Q, Nrows, N, Q_mean, Q_sub)      
@@ -317,7 +319,7 @@ program main
     allocate (Stemp(Nblk, Nblk))
    
     do i = 1, Nfreq
-        call weighting(weightDIR, weightfile, Q_k(:,:,i), Stemp, Nblk, Nrows, nr, ntheta, numvar,Fr)
+        call weighting(weightDIR, weightfile, Q_k(:,:,i), Stemp, Nblk, Nrows, nr, ntheta, numvar)
         S(:,:,i) = Stemp
     end do
 
@@ -412,4 +414,4 @@ program main
     deallocate (Stemp)
 
     
-end program main 
+end program main
